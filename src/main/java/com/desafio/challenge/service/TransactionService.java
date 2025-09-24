@@ -30,7 +30,7 @@ public class TransactionService {
         BigDecimal saldoAnterior = user.getSaldo();
         BigDecimal novoSaldo;
 
-        // Aplicar juros se estiver negativo
+
         if (saldoAnterior.compareTo(BigDecimal.ZERO) < 0) {
             BigDecimal divida = saldoAnterior.abs().multiply(JURO_NEGATIVACAO);
             novoSaldo = valor.subtract(divida);
@@ -48,7 +48,7 @@ public class TransactionService {
 
         Transaction saved = transactionRepository.save(transaction);
 
-        // Atualizar cache
+
         cacheService.atualizarCacheSaldo(user.getId(), novoSaldo);
 
         return saved;
@@ -70,7 +70,7 @@ public class TransactionService {
 
         Transaction saved = transactionRepository.save(transaction);
 
-        // Atualizar cache
+
         cacheService.atualizarCacheSaldo(user.getId(), novoSaldo);
 
         return saved;
@@ -81,13 +81,13 @@ public class TransactionService {
     }
 
     public BigDecimal consultarSaldo(User user) {
-        // Tentar obter do cache primeiro
+
         BigDecimal saldoCache = cacheService.obterSaldoCache(user.getId());
         if (saldoCache != null) {
             return saldoCache;
         }
 
-        // Se não estiver em cache, buscar do banco e atualizar cache
+
         BigDecimal saldo = user.getSaldo();
         cacheService.atualizarCacheSaldo(user.getId(), saldo);
 

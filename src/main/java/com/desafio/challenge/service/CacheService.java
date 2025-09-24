@@ -14,7 +14,7 @@ public class CacheService {
 
     @Cacheable(value = CACHE_NAME, key = "#userId")
     public BigDecimal obterSaldoCache(Long userId) {
-        // Retorna null se não estiver em cache, forçando busca no banco
+
         return null;
     }
 

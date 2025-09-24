@@ -16,10 +16,11 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // Agora vai funcionar
+    private PasswordEncoder passwordEncoder;
 
     public User criarUsuario(User user) {
-        // Validar CPF
+
+
         if (!validarCPF(user.getDocumento())) {
             throw new IllegalArgumentException("CPF inválido");
         }
@@ -51,14 +52,14 @@ public class UserService {
 
         if (cpf.length() != 11) return false;
 
-        // Verificar se todos os dígitos são iguais
+
         if (cpf.matches("(\\d)\\1{10}")) return false;
 
-        // Algoritmo de validação do CPF
+
         try {
             int[] digits = cpf.chars().map(Character::getNumericValue).toArray();
 
-            // Primeiro dígito verificador
+
             int sum = 0;
             for (int i = 0; i < 9; i++) {
                 sum += digits[i] * (10 - i);
@@ -68,7 +69,6 @@ public class UserService {
 
             if (digits[9] != firstDigit) return false;
 
-            // Segundo dígito verificador
             sum = 0;
             for (int i = 0; i < 10; i++) {
                 sum += digits[i] * (11 - i);
